@@ -1,0 +1,238 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1.5rem;
+  position: relative;
+  z-index: 100;
+}
+
+.header.glass-card:hover {
+  transform: none;
+}
+
+.header-left,
+.header-right,
+.header-center {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header-center {
+  position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-text {
+  font-size: 1.35rem;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+/* Search */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+  width: 380px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.search-bar:focus-within {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.search-icon {
+  margin-right: 0.6rem;
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none !important;
+  color: var(--text-primary);
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-spinner {
+  color: var(--accent-color);
+  animation: spin 1s linear infinite;
+  flex-shrink: 0;
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.search-clear:hover {
+  color: var(--text-primary);
+}
+
+/* Search Dropdown */
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  width: 380px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+}
+
+.search-result {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: background 0.15s ease;
+  width: 100%;
+}
+
+.search-result:hover {
+  background: var(--accent-bg);
+}
+
+.search-result svg {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.result-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.result-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.result-region {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Buttons */
+.location-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface-hover);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  height: 40px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.location-pill svg {
+  color: var(--accent-light);
+}
+
+.icon-btn {
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border-color);
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+  color: var(--text-primary);
+}
+
+.icon-btn:hover {
+  background: var(--accent-bg);
+}
+
+.icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .search-bar, .search-dropdown {
+    width: 280px;
+  }
+}
+
+@media (max-width: 900px) {
+  .search-bar, .search-dropdown {
+    width: 220px;
+  }
+
+  .location-btn span {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .header-center {
+    order: 3;
+    width: 100%;
+  }
+
+  .search-bar, .search-dropdown {
+    width: 100%;
+  }
+}

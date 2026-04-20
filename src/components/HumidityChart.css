@@ -1,0 +1,66 @@
+.humidity-chart {
+  padding: 1.25rem;
+}
+
+.humidity-chart h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.current-humid {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.h-chart-tooltip {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  padding: 0.6rem 0.9rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  z-index: 100;
+  white-space: nowrap;
+  animation: tooltipAppear 0.2s ease-out;
+}
+
+@keyframes tooltipAppear {
+  from { opacity: 0; transform: translate(-50%, -110%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -120%) scale(1); }
+}
+
+.h-tooltip-time {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+
+.h-tooltip-val {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+}

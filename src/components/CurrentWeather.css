@@ -1,0 +1,130 @@
+.current-weather {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cw-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cw-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.cw-time {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.weather-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.temperature-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.temperature {
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: var(--text-primary);
+  animation: tempBreath 3s ease-in-out infinite;
+}
+
+@keyframes tempBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.cw-unit {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-top: 0.4rem;
+  color: var(--text-secondary);
+}
+
+.weather-icon {
+  color: var(--accent-color);
+  animation: cw-float 5s ease-in-out infinite;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+@keyframes cw-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(2deg); }
+  50% { transform: translateY(-10px) rotate(0deg); }
+  75% { transform: translateY(-6px) rotate(-2deg); }
+}
+
+.cw-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.desc-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.feels-like {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: var(--accent-bg);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  width: 100%;
+}
+
+.weather-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.footer-item:hover {
+  transform: translateX(4px);
+}
+
+.footer-item svg {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.footer-item:hover svg {
+  color: var(--accent-color);
+}
+
+.footer-item span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+

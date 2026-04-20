@@ -1,0 +1,90 @@
+.hourly-forecast {
+  padding: 1.25rem;
+  overflow: hidden;
+}
+
+.scroll-container {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-container::-webkit-scrollbar {
+  height: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 68px;
+  padding: 0.75rem 0.4rem;
+  border-radius: var(--radius-md);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.hourly-item:hover {
+  background: var(--accent-bg);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.hourly-item.active {
+  background: var(--accent-color);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.hourly-item.active .hour-time,
+.hourly-item.active .hour-temp,
+.hourly-item.active .hour-icon svg,
+.hourly-item.active .hour-precip,
+.hourly-item.active .hour-precip svg,
+.hourly-item.active .hour-precip span {
+  color: white;
+}
+
+.hour-time {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.hour-icon svg {
+  color: var(--text-secondary);
+}
+
+.hour-temp {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hour-precip {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: #3b82f6;
+}
+
+.hour-precip span {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #3b82f6;
+}
+
+.hour-precip svg {
+  color: #3b82f6;
+}
