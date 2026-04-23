@@ -1,5 +1,7 @@
+/* ---- Skeleton Shimmer Animation ---- */
 .skeleton-pulse {
   background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   position: relative;
   overflow: hidden;
@@ -12,8 +14,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-  animation: shimmer 1.5s infinite;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.06) 40%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 60%,
+    transparent 100%
+  );
+  animation: shimmer 1.8s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -21,18 +30,32 @@
   100% { transform: translateX(100%); }
 }
 
+/* ---- Header ---- */
 .skeleton-header {
   height: 64px;
-  border-radius: var(--radius-lg);
 }
 
+/* ---- View Toggle ---- */
+.skeleton-toggle-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.skeleton-toggle {
+  width: 320px;
+  height: 48px;
+  border-radius: 999px;
+}
+
+/* ---- Two-column layout (matches .main-content grid) ---- */
 .skeleton-main {
   display: grid;
   grid-template-columns: 340px 1fr;
   gap: 1.5rem;
-  margin-top: 1.5rem;
+  align-items: start;
 }
 
+/* ---- Left sidebar ---- */
 .skeleton-left {
   display: flex;
   flex-direction: column;
@@ -40,17 +63,24 @@
 }
 
 .skeleton-current {
-  height: 300px;
+  height: 280px;
 }
 
 .skeleton-daily {
-  height: 350px;
+  height: 340px;
 }
 
+/* ---- Right dashboard ---- */
 .skeleton-right {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+}
+
+.skeleton-section-title {
+  height: 20px;
+  width: 180px;
+  border-radius: 8px;
 }
 
 .skeleton-highlights {
@@ -60,11 +90,22 @@
 }
 
 .skeleton-card {
-  height: 160px;
+  height: 155px;
 }
 
 .skeleton-hourly {
-  height: 120px;
+  height: 100px;
+}
+
+.skeleton-chart {
+  height: 260px;
+}
+
+/* ---- Responsive (match App.css breakpoints) ---- */
+@media (max-width: 1100px) {
+  .skeleton-main {
+    grid-template-columns: 300px 1fr;
+  }
 }
 
 @media (max-width: 900px) {
@@ -74,5 +115,9 @@
 
   .skeleton-highlights {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skeleton-toggle {
+    width: 200px;
   }
 }
