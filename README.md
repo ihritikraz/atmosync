@@ -1,73 +1,101 @@
-# React + TypeScript + Vite
+# ⛅ AtmoSync — Atmospheric Intelligence
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, real-time weather dashboard with multi-year climate comparison, built with React + TypeScript + Vite.
 
-Currently, two official plugins are available:
+![AtmoSync](https://img.shields.io/badge/AtmoSync-Live-blue?style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+### 🌡️ Live Dashboard
+- Real-time weather with auto-detected geolocation
+- Dynamic temperature-based color themes (cold → cool → moderate → hot)
+- 7-day forecast with temperature range bars
+- 24-hour atmospheric trend charts (temperature, humidity, precipitation)
+- Today's highlights: UV Index, Wind, Humidity, Pressure, Visibility, Cloud Cover, Air Quality
+- Light/Dark mode toggle with glassmorphism design
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 📊 Climate Compare Engine
+- **4-year comparison** (2023, 2024, 2025, 2026) across 6 metrics
+- **Trend Chart** — Interactive SVG chart with year-over-year overlays
+- **Date Compare** — Pick any day and compare it across all years with 24h hourly timeline
+- **Monthly Stats** — Aggregated monthly averages, rainfall, humidity extremes
+- **Data Table** — Full 12-month × 4-year tabular breakdown
 
-## Expanding the ESLint configuration
+### ⚡ Cloud Vault (CDN)
+Historical data is pre-cached as compressed binary files in [atmosync-vault](https://github.com/ihritikraz/atmosync-vault), served via GitHub's raw CDN for instant loading with zero rate limits.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 19 + TypeScript |
+| Build | Vite 8 |
+| Styling | Vanilla CSS with CSS Variables + Glassmorphism |
+| Font | Outfit (self-hosted) |
+| Icons | Lucide React |
+| APIs | Open-Meteo (Forecast, Archive, Climate), OpenStreetMap, BigDataCloud |
+| Data Vault | GitHub Raw CDN + Binary encoding |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Clone
+git clone https://github.com/ihritikraz/atmosync.git
+cd atmosync
+
+# Install
+npm install
+
+# Dev server
+npm run dev
+
+# Build
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── components/       # UI components (Header, CurrentWeather, Highlights, Charts, etc.)
+├── hooks/            # useWeather, useHistorical, useNetworkStatus
+├── services/         # weatherApi, historicalApi (vault + API fallback)
+├── types/            # TypeScript interfaces (weather, historical)
+├── utils/            # Binary decoder for vault files
+└── App.tsx           # Main app with dashboard/compare view toggle
+
+server/               # Vault seeder & binary packer utilities
+atmosync-vault/       # Pre-cached binary weather data (separate repo)
+```
+
+## 🌐 Data Flow
+
+```
+User searches a city
+      │
+      ▼
+┌─────────────────────┐
+│  Try Cloud Vault     │  ← GitHub CDN (instant, no limits)
+│  /v1/{lat}/{lon}/    │
+│  {lat}_{lon}_{year}  │
+└──────┬──────────────┘
+       │
+  Hit? → Decode binary → Done! (< 50ms)
+  Miss? → Fallback ↓
+       │
+┌──────▼──────────────┐
+│  Open-Meteo API      │  ← Live API (may rate-limit)
+└─────────────────────┘
+```
+
+## 👤 Author
+
+**Hritik Raj** — Cloud Support Engineer  
+[GitHub](https://github.com/ihritikraz)
+
+---
+
+*Built with ❤️ and atmospheric precision.*
