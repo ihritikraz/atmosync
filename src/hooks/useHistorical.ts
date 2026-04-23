@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import type { YearData, DateComparison, DailyRecord } from '../types/historical';
+import type { YearData, DateComparison } from '../types/historical';
 import { YEAR_CONFIG } from '../types/historical';
-import { buildYearData, fetchDateComparison } from '../services/historicalApi';
+import { buildYearData, fetchDateComparison, fetchHourlyComparison } from '../services/historicalApi';
 
 export function useHistorical(lat: number, lon: number) {
   const [yearlyData, setYearlyData] = useState<YearData[]>([]);
@@ -10,12 +10,21 @@ export function useHistorical(lat: number, lon: number) {
   const [loadingDate, setLoadingDate] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
+  // Track the current coordinates to detect staleness
+  const activeCoordsRef = useRef({ lat, lon });
   const isLoadingRef = useRef(false);
 
   /**
-   * Load all years of data in parallel, but with a small stagger to avoid 429 errors
+   * Load all years of data in parallel, but with a small stagger to avoid 429 errors.
+   * Uses coordinate snapshot to detect if a newer request has superseded this one.
    */
   const loadAllYears = useCallback(async () => {
+    // Capture the coordinates at the time this request was initiated
+    const requestLat = lat;
+    const requestLon = lon;
+    activeCoordsRef.current = { lat: requestLat, lon: requestLon };
+
+    // If already loading, let the effect re-trigger after it completes
     if (isLoadingRef.current) return;
     isLoadingRef.current = true;
     setLoading(true);
@@ -30,7 +39,7 @@ export function useHistorical(lat: number, lon: number) {
           // This avoids the 'burst' 429 limit while still being 'parallel'
           if (idx > 0) await wait(idx * 150);
           
-          return await buildYearData(lat, lon, cfg.year, cfg.type, cfg.label, cfg.color);
+          return await buildYearData(requestLat, requestLon, cfg.year, cfg.type, cfg.label, cfg.color);
         } catch (err) {
           console.error(`Year ${cfg.year} failed to load:`, err);
           return null; // Handle individual year failure
@@ -38,17 +47,25 @@ export function useHistorical(lat: number, lon: number) {
       });
 
       const results = await Promise.all(promises);
-      const validResults = results.filter((r): r is YearData => r !== null);
-      
-      if (validResults.length > 0) {
-        setYearlyData(validResults);
-        setLoaded(true);
+
+      // Only apply results if these coordinates are still the active ones
+      if (activeCoordsRef.current.lat === requestLat && activeCoordsRef.current.lon === requestLon) {
+        const validResults = results.filter((r): r is YearData => r !== null);
+        if (validResults.length > 0) {
+          setYearlyData(validResults);
+          setLoaded(true);
+        }
       }
     } catch (err) {
       console.error('Fatal failure in historical loader:', err);
     } finally {
       isLoadingRef.current = false;
       setLoading(false);
+
+      // If coordinates changed while we were loading, trigger a new load
+      if (activeCoordsRef.current.lat !== requestLat || activeCoordsRef.current.lon !== requestLon) {
+        // Coordinates changed during the load — a new useEffect will handle it
+      }
     }
   }, [lat, lon]);
 
@@ -61,7 +78,7 @@ export function useHistorical(lat: number, lon: number) {
       const years = YEAR_CONFIG.map(c => c.year);
       const [results, hourlyResults] = await Promise.all([
         fetchDateComparison(lat, lon, month, day, years),
-        import('../services/historicalApi').then(m => m.fetchHourlyComparison(lat, lon, month, day, years))
+        fetchHourlyComparison(lat, lon, month, day, years)
       ]);
 
       // Fill in data from already loaded yearly cache
@@ -101,7 +118,13 @@ export function useHistorical(lat: number, lon: number) {
   }, [lat, lon, yearlyData]);
 
   // Reactive Trigger: Auto-load when coordinates change
+  // Also clear stale data so old city data doesn't flash
   useEffect(() => {
+    // Clear stale comparison data from previous location
+    setDateComparison(null);
+    setYearlyData([]);
+    setLoaded(false);
+
     loadAllYears();
   }, [lat, lon, loadAllYears]); // Coordinates are the primary key
 

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { YEAR_CONFIG } from '../types/historical';
 import { ThermometerSun, Droplets, Wind, CloudRain, Sun } from 'lucide-react';
 

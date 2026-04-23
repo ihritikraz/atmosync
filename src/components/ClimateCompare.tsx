@@ -15,8 +15,8 @@ interface Props {
   setMetric: (m: 'temp' | 'precip' | 'wind' | 'humidity') => void;
 }
 
-const ClimateCompare = ({ lat, lon, cityName, metric, setMetric }: Props) => {
-  const { yearlyData, dateComparison, loading, loadingDate, loaded, loadAllYears, compareDate } = useHistorical(lat, lon);
+const ClimateCompare = ({ lat, lon, cityName, metric }: Props) => {
+  const { yearlyData, dateComparison, loadingDate, compareDate } = useHistorical(lat, lon);
   const [activeTab, setActiveTab] = useState<'overview' | 'date' | 'monthly' | 'table'>('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [selectedDay, setSelectedDay] = useState(new Date().getDate());

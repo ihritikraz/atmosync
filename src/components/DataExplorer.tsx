@@ -231,7 +231,7 @@ export default function DataExplorer({ yearlyData, initialMetric = 'temp' }: Pro
                     {/* Render All Active Years for this Exact Metric */}
                     {activeData.map((yd, sortIdx) => {
                       const recordsMap = new Map(yd.dailyRecords.map(r => [r.date.slice(5), r])); 
-                      const d3Points: { x: number, y: number, yLow: number | null, date: string }[] = [];
+                      const d3Points: { x: number, y: number, yLow: number | null, date: string, absoluteIndex: number, rawY: number }[] = [];
                       
                       let dateCursor = new Date(2024, 0, 1); 
                       
@@ -377,7 +377,6 @@ export default function DataExplorer({ yearlyData, initialMetric = 'temp' }: Pro
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {activeData.map(yd => {
-                          const isHeroYear = (yd === activeData[activeData.length - 1]);
                           let dateCursor = new Date(2024, 0, 1);
                           dateCursor.setDate(dateCursor.getDate() + hoverIdx);
                           

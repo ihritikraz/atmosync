@@ -1,5 +1,6 @@
 import { decodeDailyBuffer } from '../utils/binary';
-
+import type { DailyRecord, MonthlyAggregate, YearData } from '../types/historical';
+import { MONTH_NAMES } from '../types/historical';
 const VAULT_BASE = 'https://raw.githubusercontent.com/ihritikraz/atmosync-vault/main/v1';
 const ARCHIVE_URL = 'https://archive-api.open-meteo.com/v1/archive';
 const CLIMATE_URL = 'https://climate-api.open-meteo.com/v1/climate';
@@ -113,6 +114,8 @@ async function fetchCurrentForecast(lat: number, lon: number): Promise<DailyReco
       tempMin: data.daily.temperature_2m_min[i] ?? null,
       precipitation: data.daily.precipitation_sum[i] ?? null,
       humidity: data.daily.relative_humidity_2m_mean?.[i] ?? null,
+      humidityMax: data.daily.relative_humidity_2m_max?.[i] ?? null,
+      humidityMin: data.daily.relative_humidity_2m_min?.[i] ?? null,
       windSpeed: data.daily.wind_speed_10m_max[i] ?? null,
       feelsLike: data.daily.apparent_temperature_max?.[i] ?? null,
       uv: data.daily.uv_index_max?.[i] ?? null,
@@ -219,6 +222,8 @@ export async function fetchDateComparison(
             tempMin: d.daily.temperature_2m_min[0] ?? null,
             precipitation: d.daily.precipitation_sum[0] ?? null,
             humidity: null,
+            humidityMax: null,
+            humidityMin: null,
             windSpeed: d.daily.wind_speed_10m_max[0] ?? null,
             feelsLike: null,
             uv: null,
@@ -241,6 +246,8 @@ export async function fetchDateComparison(
             humidityMax: d.daily.relative_humidity_2m_max?.[0] ?? null,
             humidityMin: d.daily.relative_humidity_2m_min?.[0] ?? null,
             windSpeed: d.daily.wind_speed_10m_max[0] ?? null,
+            feelsLike: d.daily.apparent_temperature_max?.[0] ?? null,
+            uv: d.daily.uv_index_max?.[0] ?? null,
           };
         }
       }
@@ -348,9 +355,10 @@ export function aggregateToMonthly(records: DailyRecord[]): MonthlyAggregate[] {
     const avgHumidity = getValidAvg(days.map(d => d.humidity));
     
     // For extremes, find the absolute max and min in that month
-    const validHumMaxs = days.filter(d => d.humidityMax !== null).map(d => d.humidityMax!);
+    // Use explicit null AND undefined check to guard against missing API fields
+    const validHumMaxs = days.filter(d => d.humidityMax != null).map(d => d.humidityMax!);
     const maxHumidity = validHumMaxs.length > 0 ? Math.max(...validHumMaxs) : null;
-    const validHumMins = days.filter(d => d.humidityMin !== null).map(d => d.humidityMin!);
+    const validHumMins = days.filter(d => d.humidityMin != null).map(d => d.humidityMin!);
     const minHumidity = validHumMins.length > 0 ? Math.min(...validHumMins) : null;
 
     result.push({

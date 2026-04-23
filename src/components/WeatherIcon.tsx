@@ -1,6 +1,6 @@
 import {
   Sun, Moon, Cloud, CloudSun, CloudRain, CloudDrizzle,
-  CloudLightning, CloudSnow, CloudFog, CloudHail,
+  CloudLightning, CloudFog, CloudHail,
   CloudRainWind, CloudSunRain, Snowflake, CloudMoon,
 } from 'lucide-react';
 

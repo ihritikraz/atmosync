@@ -1,5 +1,5 @@
 import React from 'react';
-import { WifiOff, AlertTriangle } from 'lucide-react';
+import { WifiOff } from 'lucide-react';
 import './NetworkBanner.css';
 
 interface NetworkBannerProps {

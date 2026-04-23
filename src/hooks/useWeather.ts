@@ -127,7 +127,7 @@ export function useCitySearch() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<GeoLocation[]>([]);
   const [searching, setSearching] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (query.trim().length < 2) {

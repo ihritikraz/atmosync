@@ -3,7 +3,7 @@
  * Unpacks the high-density binary weather data from the Cloud Vault.
  */
 
-import { DailyRecord } from '../types/historical';
+import type { DailyRecord } from '../types/historical';
 
 const METRIC_COUNT = 9;
 const BYTES_PER_METRIC = 2;
