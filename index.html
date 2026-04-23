@@ -2,14 +2,115 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/atmosync/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="inDark Creation" />
-    <meta name="owner" content="inDark Lab" />
+    <meta name="description" content="AtmoSync — Real-time weather dashboard with multi-year climate comparison. Atmospheric Intelligence at your fingertips." />
+    <meta name="author" content="Hritik Raj" />
     <title>AtmoSync — Atmospheric Intelligence</title>
+
+    <!-- Critical inline styles for instant skeleton render (before JS loads) -->
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body { background: #eef2f7; font-family: 'Outfit', system-ui, sans-serif; }
+
+      .pre-skeleton {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1.5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        min-height: 100vh;
+      }
+
+      .pre-pulse {
+        background: rgba(255,255,255,0.6);
+        border: 1px solid rgba(0,0,0,0.06);
+        border-radius: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+      .pre-pulse::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
+        animation: pre-shimmer 1.8s ease-in-out infinite;
+      }
+      @keyframes pre-shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .pre-header { height: 64px; }
+      .pre-toggle-wrap { display: flex; justify-content: center; }
+      .pre-toggle { width: 320px; height: 48px; border-radius: 999px; }
+
+      .pre-main {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 1.5rem;
+        align-items: start;
+        width: 100%;
+      }
+      .pre-left { display: flex; flex-direction: column; gap: 1.5rem; }
+      .pre-current { height: 280px; }
+      .pre-daily { height: 340px; }
+
+      .pre-right { display: flex; flex-direction: column; gap: 1rem; width: 100%; min-width: 0; }
+      .pre-title { height: 20px; width: 180px; border-radius: 8px; }
+      .pre-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+      }
+      .pre-card { height: 155px; }
+      .pre-hourly { height: 100px; }
+      .pre-chart { height: 260px; }
+
+      @media (max-width: 1100px) {
+        .pre-main { grid-template-columns: 300px 1fr; }
+      }
+      @media (max-width: 900px) {
+        .pre-main { grid-template-columns: 1fr; }
+        .pre-cards { grid-template-columns: repeat(2, 1fr); }
+        .pre-toggle { width: 200px; }
+        .pre-skeleton { padding: 1rem; }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Inline skeleton: visible instantly, replaced when React mounts -->
+      <div class="pre-skeleton">
+        <div class="pre-header pre-pulse"></div>
+        <div class="pre-toggle-wrap"><div class="pre-toggle pre-pulse"></div></div>
+        <div class="pre-main">
+          <div class="pre-left">
+            <div class="pre-current pre-pulse"></div>
+            <div class="pre-daily pre-pulse"></div>
+          </div>
+          <div class="pre-right">
+            <div class="pre-title pre-pulse"></div>
+            <div class="pre-cards">
+              <div class="pre-card pre-pulse"></div>
+              <div class="pre-card pre-pulse"></div>
+              <div class="pre-card pre-pulse"></div>
+              <div class="pre-card pre-pulse"></div>
+              <div class="pre-card pre-pulse"></div>
+              <div class="pre-card pre-pulse"></div>
+              <div class="pre-card pre-pulse"></div>
+              <div class="pre-card pre-pulse"></div>
+            </div>
+            <div class="pre-title pre-pulse"></div>
+            <div class="pre-hourly pre-pulse"></div>
+            <div class="pre-title pre-pulse"></div>
+            <div class="pre-chart pre-pulse"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
