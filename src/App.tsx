@@ -67,11 +67,7 @@ function App() {
   }
 
   if (loading && !data) {
-    return (
-        <div className="app-container">
-          <LoadingSkeleton />
-        </div>
-    );
+    return <LoadingSkeleton />;
   }
 
   if (!data) return null;
