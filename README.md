@@ -2,6 +2,8 @@
 
 A premium, real-time weather dashboard with multi-year climate comparison, built with React + TypeScript + Vite.
 
+**🌍 Live Demo:** [https://ihritikraz.github.io/atmosync/](https://ihritikraz.github.io/atmosync/)
+
 ![AtmoSync](https://img.shields.io/badge/AtmoSync-Live-blue?style=for-the-badge)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
