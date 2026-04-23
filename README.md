@@ -93,7 +93,7 @@ User searches a city
 
 ## 👤 Author
 
-**Hritik Raj** — Cloud Support Engineer  
+**Hritik Raj** 
 [GitHub](https://github.com/ihritikraz)
 
 ---
